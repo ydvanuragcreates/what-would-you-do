@@ -1,0 +1,37 @@
+category: justice
+scenarios:
+  - slug: justice-shaken-driver
+    title: The Shaken Driver
+    difficulty: 2
+    situation: "You see an elderly driver clip a parked car and drive off, visibly shaken. Nobody else noticed, and the owner is nowhere in sight."
+    choices:
+      - text: "Leave the owner a note with the plate number."
+        weights: { responsibility: 9, empathy: 3, fairness: 9 }
+      - text: "Catch up and urge the driver to go back."
+        weights: { responsibility: 7, empathy: 7, fairness: 6 }
+      - text: "Do nothing. It looks minor and they seemed scared."
+        weights: { responsibility: 2, empathy: 8, fairness: 2 }
+
+  - slug: justice-scholarship
+    title: The Scholarship
+    difficulty: 2
+    situation: "You know a classmate cheated on the exam that decides a scholarship. You're both in the running, so reporting them would also help you."
+    choices:
+      - text: "Report them to the teacher."
+        weights: { honesty: 8, fairness: 9, self_interest: 8 }
+      - text: "Tell them to confess, or I will."
+        weights: { honesty: 8, fairness: 8, self_interest: 4 }
+      - text: "Stay out of it."
+        weights: { honesty: 2, fairness: 2, self_interest: 5 }
+
+  - slug: justice-the-holdout
+    title: The Holdout
+    difficulty: 3
+    situation: "You're on a jury. Eleven others have voted guilty and want to go home. You're about eighty percent sure the defendant did it."
+    choices:
+      - text: "Vote guilty. Eighty percent is close enough."
+        weights: { social_pressure: 8, fairness: 4, responsibility: 4 }
+      - text: "Hold out until someone convinces me."
+        weights: { social_pressure: 1, fairness: 9, responsibility: 8 }
+      - text: "Vote guilty, but voice my doubts."
+        weights: { social_pressure: 5, fairness: 6, responsibility: 6 }

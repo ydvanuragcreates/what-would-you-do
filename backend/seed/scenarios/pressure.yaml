@@ -1,0 +1,37 @@
+category: pressure
+scenarios:
+  - slug: pressure-take-the-blame
+    title: Take the Blame
+    difficulty: 3
+    situation: "Your brother hit a cyclist with his car and drove off. Police are asking around. He begs you to say you were driving. You have a clean record; he doesn't."
+    choices:
+      - text: "Say I was driving."
+        weights: { honesty: 1, loyalty: 10, risk: 9 }
+      - text: "Refuse and tell him to turn himself in."
+        weights: { honesty: 9, loyalty: 3, risk: 3 }
+      - text: "Refuse, but don't volunteer anything to the police."
+        weights: { honesty: 4, loyalty: 6, risk: 4 }
+
+  - slug: pressure-the-ledge
+    title: The Ledge
+    difficulty: 1
+    situation: "At a party, everyone has jumped into the lake from a rock ledge. It's dark, you can't see the bottom, and now they're all chanting your name."
+    choices:
+      - text: "Jump. Everyone else did."
+        weights: { risk: 9, social_pressure: 9, responsibility: 2 }
+      - text: "Say no and laugh it off."
+        weights: { risk: 2, social_pressure: 2, responsibility: 8 }
+      - text: "Say no, but stay and cheer them on."
+        weights: { risk: 2, social_pressure: 6, responsibility: 6 }
+
+  - slug: pressure-the-wrong-number
+    title: The Wrong Number
+    difficulty: 2
+    situation: "The night before a big presentation, you spot a wrong statistic in the deck your boss already approved. Fixing it means admitting the error got through."
+    choices:
+      - text: "Fix it and tell my boss why."
+        weights: { honesty: 9, risk: 6, responsibility: 9 }
+      - text: "Fix it quietly. No one needs to know."
+        weights: { honesty: 5, risk: 4, responsibility: 7 }
+      - text: "Leave it. It doesn't change the conclusion."
+        weights: { honesty: 2, risk: 7, responsibility: 2 }

@@ -1,0 +1,37 @@
+category: money
+scenarios:
+  - slug: money-too-much-change
+    title: Too Much Change
+    difficulty: 1
+    situation: "A cashier hands you $20 too much in change. You notice at the door. The shop is packed and nobody saw."
+    choices:
+      - text: "Go back and return it."
+        weights: { honesty: 9, self_interest: 2, responsibility: 8 }
+      - text: "Keep it. That's their mistake."
+        weights: { honesty: 2, self_interest: 9, responsibility: 2 }
+      - text: "Keep it, and give $20 to charity later."
+        weights: { honesty: 3, self_interest: 5, responsibility: 5 }
+
+  - slug: money-the-loan
+    title: The Loan
+    difficulty: 2
+    situation: "A friend asks to borrow $500. They still haven't repaid the $200 from last year, and they haven't mentioned it."
+    choices:
+      - text: "Lend it. They're going through a rough patch."
+        weights: { loyalty: 8, fairness: 3, self_interest: 2 }
+      - text: "Say no and bring up the $200."
+        weights: { loyalty: 3, fairness: 8, self_interest: 6 }
+      - text: "Lend part of it and mention the old $200."
+        weights: { loyalty: 5, fairness: 7, self_interest: 5 }
+
+  - slug: money-payroll-error
+    title: The Extra Pay
+    difficulty: 2
+    situation: "Payroll accidentally deposits $1,500 extra into your account. You're a month behind on rent."
+    choices:
+      - text: "Report it right away."
+        weights: { honesty: 10, self_interest: 2, risk: 1 }
+      - text: "Say nothing and hope it's never noticed."
+        weights: { honesty: 1, self_interest: 9, risk: 8 }
+      - text: "Report it and ask to repay in installments."
+        weights: { honesty: 8, self_interest: 5, risk: 3 }

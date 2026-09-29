@@ -1,0 +1,37 @@
+category: work
+scenarios:
+  - slug: work-whose-idea
+    title: Whose Idea?
+    difficulty: 2
+    situation: "Your manager praises a project in front of the team. It was mostly a colleague's idea. It's the same colleague who took credit for your work last quarter."
+    choices:
+      - text: "Accept the praise. Fair is fair."
+        weights: { honesty: 3, fairness: 5, self_interest: 9 }
+      - text: "Give them the credit anyway."
+        weights: { honesty: 9, fairness: 8, self_interest: 3 }
+      - text: "Say nothing now, and talk to them privately."
+        weights: { honesty: 6, fairness: 7, self_interest: 6 }
+
+  - slug: work-who-broke-it
+    title: Who Broke It?
+    difficulty: 3
+    situation: "A teammate's mistake will delay the launch. Your boss asks who was responsible. That teammate has a newborn and can't afford to lose the job."
+    choices:
+      - text: "Tell the truth. The boss needs to know."
+        weights: { honesty: 9, loyalty: 3, responsibility: 7 }
+      - text: "Say it was a team failure, including me."
+        weights: { honesty: 5, loyalty: 8, responsibility: 8 }
+      - text: "Say I'm not sure what happened."
+        weights: { honesty: 2, loyalty: 5, responsibility: 2 }
+
+  - slug: work-last-one-out
+    title: Last One Out
+    difficulty: 1
+    situation: "Your team is staying late again for a deadline nobody thinks is realistic. You have plans. Leaving means being the only one who left."
+    choices:
+      - text: "Stay. Leaving would look bad."
+        weights: { social_pressure: 9, self_interest: 3, responsibility: 7 }
+      - text: "Leave on time and explain why."
+        weights: { social_pressure: 2, self_interest: 8, responsibility: 4 }
+      - text: "Stay an hour, then slip out."
+        weights: { social_pressure: 6, self_interest: 6, responsibility: 5 }

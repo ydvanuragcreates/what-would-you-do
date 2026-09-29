@@ -1,0 +1,27 @@
+# Secrets - never commit
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / Next.js (frontend, later)
+node_modules/
+.next/
+out/
+
+#  Coverage / misc test output
+backend/htmlcov/
+backend/.coverage
+backend/coverage.xml
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/

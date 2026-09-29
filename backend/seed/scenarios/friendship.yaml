@@ -1,0 +1,37 @@
+category: friendship
+scenarios:
+  - slug: friend-alibi
+    title: The Alibi
+    difficulty: 2
+    situation: "Your close friend asks you to tell their boss they were with you all afternoon. They weren't. They were at a job interview, and if the boss finds out, they could be fired."
+    choices:
+      - text: "Tell the truth if the boss asks me."
+        weights: { honesty: 9, loyalty: 2, self_interest: 5 }
+      - text: "Cover for them. They'd do the same for me."
+        weights: { honesty: 1, loyalty: 9, self_interest: 3 }
+      - text: "Tell them I'm staying out of it."
+        weights: { honesty: 5, loyalty: 3, self_interest: 8 }
+
+  - slug: friend-partner-date
+    title: What You Saw
+    difficulty: 3
+    situation: "You spot your best friend's partner holding hands with someone else at a restaurant across town. Your friend has never seemed happier."
+    choices:
+      - text: "Tell my friend what I saw, tonight."
+        weights: { honesty: 9, loyalty: 7, fairness: 4 }
+      - text: "Confront the partner first and give them a chance to come clean."
+        weights: { honesty: 6, loyalty: 5, fairness: 9 }
+      - text: "Say nothing. I might have misread it."
+        weights: { honesty: 2, loyalty: 2, fairness: 5 }
+
+  - slug: friend-group-chat
+    title: The Group Chat
+    difficulty: 1
+    situation: "Your friends are mocking a mutual friend who isn't in the chat. It's cruel, but everyone's laughing, and you're the only one who hasn't replied yet."
+    choices:
+      - text: "Send a joke too. It's harmless."
+        weights: { social_pressure: 9, empathy: 2, risk: 2 }
+      - text: 'Write "okay, that''s enough" in the chat.'
+        weights: { social_pressure: 1, empathy: 8, risk: 8 }
+      - text: "Stay quiet and stop replying."
+        weights: { social_pressure: 5, empathy: 5, risk: 4 }

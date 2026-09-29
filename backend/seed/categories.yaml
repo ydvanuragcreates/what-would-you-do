@@ -1,0 +1,8 @@
+- { slug: friendship,    name: Friendship,    emoji: "🤝", sort_order: 1 }
+- { slug: relationships, name: Relationships, emoji: "💔", sort_order: 2 }
+- { slug: money,         name: Money,         emoji: "💰", sort_order: 3 }
+- { slug: work,          name: Work,          emoji: "💼", sort_order: 4 }
+- { slug: family,        name: Family,        emoji: "🏠", sort_order: 5 }
+- { slug: justice,       name: Justice,       emoji: "⚖️", sort_order: 6 }
+- { slug: pressure,      name: Pressure,      emoji: "🔥", sort_order: 7 }
+- { slug: temptation,    name: Temptation,    emoji: "🍎", sort_order: 8 }

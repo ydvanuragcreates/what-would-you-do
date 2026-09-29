@@ -1,0 +1,37 @@
+category: relationships
+scenarios:
+  - slug: rel-lit-up-phone
+    title: The Lit-Up Phone
+    difficulty: 2
+    situation: 'Your partner is in the shower when their phone lights up with a message from an ex: "Miss talking to you."'
+    choices:
+      - text: "Open the phone and read the whole thread."
+        weights: { honesty: 3, risk: 8, empathy: 3 }
+      - text: "Leave it, then ask them about it directly later."
+        weights: { honesty: 9, risk: 5, empathy: 7 }
+      - text: "Say nothing and watch for other signs."
+        weights: { honesty: 3, risk: 2, empathy: 4 }
+
+  - slug: rel-two-places
+    title: Two Places at Once
+    difficulty: 2
+    situation: "It's your partner's birthday dinner tonight. Your closest friend just texted that they're falling apart after a breakup and need you now."
+    choices:
+      - text: "Go to my friend. The dinner can be rescheduled."
+        weights: { empathy: 9, responsibility: 3, risk: 4 }
+      - text: "Keep the dinner and call my friend tomorrow."
+        weights: { empathy: 4, responsibility: 9, risk: 2 }
+      - text: "Bring my friend along to dinner."
+        weights: { empathy: 7, responsibility: 5, risk: 8 }
+
+  - slug: rel-the-number
+    title: The Number
+    difficulty: 2
+    situation: "A few months into a serious relationship, your partner asks how many people you have slept with. The honest answer would probably sting."
+    choices:
+      - text: "Give the exact number."
+        weights: { honesty: 10, empathy: 4, self_interest: 3 }
+      - text: "Give a slightly lower number."
+        weights: { honesty: 3, empathy: 6, self_interest: 7 }
+      - text: "Say it doesn't matter and change the subject."
+        weights: { honesty: 5, empathy: 5, self_interest: 6 }

@@ -1,0 +1,37 @@
+category: temptation
+scenarios:
+  - slug: temptation-open-laptop
+    title: The Open Laptop
+    difficulty: 1
+    situation: "A colleague steps away from their desk, leaving the company salary spreadsheet open on the screen. No one is nearby."
+    choices:
+      - text: "Take a look. Just this once."
+        weights: { self_interest: 9, honesty: 2, risk: 6 }
+      - text: "Look away and close the laptop."
+        weights: { self_interest: 2, honesty: 9, risk: 1 }
+      - text: "Check only my own row."
+        weights: { self_interest: 7, honesty: 5, risk: 4 }
+
+  - slug: temptation-just-harmless
+    title: Just Harmless
+    difficulty: 3
+    situation: 'Your close friend''s partner starts flirting with you at a party and says, "Nobody has to know."'
+    choices:
+      - text: "Shut it down and tell my friend."
+        weights: { loyalty: 9, risk: 5, self_interest: 2 }
+      - text: "Shut it down and say nothing."
+        weights: { loyalty: 6, risk: 2, self_interest: 5 }
+      - text: "Enjoy the attention. It's harmless."
+        weights: { loyalty: 2, risk: 8, self_interest: 9 }
+
+  - slug: temptation-still-logged-in
+    title: Still Logged In
+    difficulty: 1
+    situation: "Your old roommate's streaming password still works. They never cancelled the account."
+    choices:
+      - text: "Keep using it. They'll never notice."
+        weights: { honesty: 3, self_interest: 8, fairness: 3 }
+      - text: "Text them and offer to chip in."
+        weights: { honesty: 8, self_interest: 4, fairness: 8 }
+      - text: "Quietly stop using it."
+        weights: { honesty: 6, self_interest: 5, fairness: 6 }

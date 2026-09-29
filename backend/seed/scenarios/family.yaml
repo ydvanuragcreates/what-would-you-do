@@ -1,0 +1,37 @@
+category: family
+scenarios:
+  - slug: family-car-keys
+    title: The Car Keys
+    difficulty: 3
+    situation: "Your elderly father insists he's fine to drive, but you've seen a couple of near misses. Taking his keys would crush his pride."
+    choices:
+      - text: "Take the keys and deal with the fallout."
+        weights: { responsibility: 9, empathy: 3, risk: 3 }
+      - text: "Keep talking and let him drive for now."
+        weights: { responsibility: 4, empathy: 9, risk: 8 }
+      - text: "Ask his doctor to make the call."
+        weights: { responsibility: 7, empathy: 5, risk: 2 }
+
+  - slug: family-secret-will
+    title: The Secret Will
+    difficulty: 3
+    situation: "Your mother quietly tells you she's leaving you more than your brother in her will, though he needs it more. She asks you to keep it secret."
+    choices:
+      - text: "Keep her secret. It's her decision."
+        weights: { honesty: 4, fairness: 2, loyalty: 8 }
+      - text: "Tell my brother."
+        weights: { honesty: 9, fairness: 7, loyalty: 4 }
+      - text: "Urge her to change it or tell him herself."
+        weights: { honesty: 7, fairness: 9, loyalty: 5 }
+
+  - slug: family-wheres-grandpa
+    title: Where's Grandpa?
+    difficulty: 3
+    situation: "Your grandmother has early dementia and keeps asking where your late grandfather is. Each time you tell her he died, she's heartbroken all over again."
+    choices:
+      - text: "Gently tell her the truth, every time."
+        weights: { honesty: 10, empathy: 4, responsibility: 6 }
+      - text: "Say he's out running errands."
+        weights: { honesty: 1, empathy: 9, responsibility: 4 }
+      - text: "Steer her toward happy memories of him."
+        weights: { honesty: 5, empathy: 8, responsibility: 6 }
