@@ -1,0 +1,193 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push to the same branch/PR cancels whatever CI run is already in flight for it,
+# so you're not waiting behind (or paying compute for) a run that's already obsolete.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # A fixed, non-secret value: fine for CI, never for production (see backend/.env.example).
+  JWT_SECRET: ci-only-secret-never-use-outside-ci-0123456789abcdef
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          # The name must contain "test": the test suite (backend/tests/conftest.py)
+          # refuses to run against a database whose name doesn't, since it wipes and
+          # rebuilds every table on every run.
+          POSTGRES_DB: wwyd_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+
+      - run: uv sync --locked
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Format check (ruff)
+        run: uv run ruff format --check .
+
+      - name: Type check (mypy)
+        run: uv run mypy app tests scripts alembic/env.py
+
+      - name: Test (pytest)
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/wwyd_test
+        run: uv run pytest -v
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test (vitest)
+        run: npm run test
+
+      - name: Build
+        # BACKEND_URL only needs to be a well-formed URL: nothing calls it during the
+        # build, its destination is just baked into the /api/* rewrite (next.config.ts).
+        env:
+          BACKEND_URL: http://127.0.0.1:8010
+        run: npm run build
+
+  # The frontend's TypeScript types (schema.d.ts) are generated from the backend's
+  # OpenAPI schema, not hand-written. This regenerates them fresh and fails the build
+  # if the committed files have drifted from what the current backend would produce -
+  # i.e. someone changed an API shape and forgot to run `npm run gen:api` and commit
+  # the result.
+  api-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --locked
+        working-directory: backend
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+
+      - run: npm run gen:api
+        working-directory: frontend
+
+      - name: Fail if the committed API types are out of date
+        working-directory: frontend
+        run: |
+          if ! git diff --exit-code -- openapi.json src/lib/api/schema.d.ts; then
+            echo "::error::frontend/openapi.json or schema.d.ts is out of date."
+            echo "::error::Run 'npm run gen:api' in frontend/ and commit the result."
+            exit 1
+          fi
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: wwyd_e2e
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/wwyd_e2e
+      RATE_LIMIT_ENABLED: "false" # the suite signs up and logs in several times in a row
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --locked
+        working-directory: backend
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+
+      - name: Ensure Google Chrome is present
+        # Our Playwright config uses the system Chrome (channel: "chrome") rather than
+        # downloading its own Chromium, since it's already on this runner image and on
+        # a normal dev machine. Installing explicitly here means CI doesn't silently
+        # depend on that image detail never changing.
+        run: |
+          if ! command -v google-chrome >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y google-chrome-stable
+          fi
+
+      - name: End-to-end tests (Playwright)
+        working-directory: frontend
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            frontend/playwright-report/
+            frontend/test-results/
+          retention-days: 7
