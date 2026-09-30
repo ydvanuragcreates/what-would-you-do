@@ -1,0 +1,42 @@
+########################################################################
+# Render "Blueprint": lets Render read this file and provision the
+# backend service automatically, instead of clicking through settings
+# by hand. In the Render dashboard: New -> Blueprint -> pick this repo.
+#
+# Values marked `sync: false` are NOT stored here (this file is public,
+# in a public repo). Render prompts for them once, during setup, and
+# keeps them in the service's own encrypted environment - never in git.
+########################################################################
+
+services:
+  - name: wwyd-backend
+    type: web
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install uv && uv sync --locked
+    # Runs the pending migrations, then starts the server. --proxy-headers
+    # tells uvicorn to trust Render's reverse proxy for the client's real
+    # IP (used by the login/register rate limiter) and the https scheme.
+    startCommand: uv run alembic upgrade head && uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers
+    # /health never touches the database (see app/api/health.py), so it
+    # can't falsely report "unhealthy" just because a free-tier database
+    # is slow to wake up from its own idle sleep.
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        sync: false # your Neon connection string (the DIRECT host, not the -pooler one)
+      - key: JWT_SECRET
+        generateValue: true # Render generates a random production secret; never reused from dev
+      - key: CORS_ORIGINS
+        sync: false # your Vercel URL, e.g. https://what-would-you-do.vercel.app
+      - key: ROUND_LENGTH
+        value: "10"
+      - key: MIN_STATS_SAMPLE
+        value: "20"
+      - key: RATE_LIMIT_ENABLED
+        value: "true"
